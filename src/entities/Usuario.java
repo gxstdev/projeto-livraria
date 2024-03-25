@@ -5,12 +5,14 @@ public class Usuario {
     private String cpf;
     private int idade;
     private String telefone;
+    private boolean adm;
 
-    public Usuario(String nome, String cpf, int idade, String telefone) {
+    public Usuario(String nome, String cpf, int idade, String telefone, boolean adm) {
         this.nome = nome;
         this.cpf = cpf;
         this.idade = idade;
         this.telefone = telefone;
+        this.adm = adm;
     }
 
     public String getNome() {
@@ -43,6 +45,14 @@ public class Usuario {
 
     public void setTelefone(String telefone) {
         this.telefone = telefone;
+    }
+
+    public boolean isAdm() {
+        return adm;
+    }
+
+    public void setAdm(boolean adm) {
+        this.adm = adm;
     }
 }
 
