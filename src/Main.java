@@ -11,17 +11,18 @@ public class Main {
         Biblioteca biblioteca = new Biblioteca();
 
         int opcao;
-        do{
+        do {
             menu();
             opcao = input.nextInt();
             input.nextLine();
-            switch(opcao){
+            switch (opcao) {
                 case 1:
                     inclui(biblioteca, input);
                     break;
 
                 case 2:
-                    emprestar(biblioteca, input);
+
+                    biblioteca.emprestarLivro(input);
                     break;
 
                 case 3:
@@ -29,15 +30,16 @@ public class Main {
                     break;
 
                 case 4:
-                    consulta(biblioteca);
+                    biblioteca.consultarLivros();
                     break;
 
                 default:
                     System.out.println("Opção inválida.");
             }
-        } while(opcao != 0);
+        } while (opcao != 0);
     }
-    public static void menu(){
+
+    public static void menu() {
         System.out.println("\tCadastrar livro");
         System.out.println("1. Adicionar livro");
         System.out.println("2. Emprestar livro");
@@ -46,7 +48,8 @@ public class Main {
         System.out.println("5. Alterar livros");
         System.out.println("6. Excluir livros");
     }
-    public static void inclui(Biblioteca biblioteca, Scanner input){
+
+    public static void inclui(Biblioteca biblioteca, Scanner input) {
         System.out.println("Digite o Título: ");
         String titulo = input.nextLine();
 
@@ -62,30 +65,10 @@ public class Main {
         biblioteca.addLivro(new Livro(titulo, editora, genero, nomeAutor, true));
     }
 
-    public static void emprestar(Biblioteca biblioteca, Scanner input){
-        System.out.println("Digite o ID do livro que deseja pegar emprestado: ");
-        int id = input.nextInt();
-        for (Livro livro : biblioteca.getLivros()){
-            if (livro.getId() == id){
-                livro.setStatus(false);
-                System.out.printf("Você pegou emprestado o livro %s!", livro);
-            }
-        }
-    }
 
-    public static void exclui(Biblioteca biblioteca, Livro livro){
+    public static void exclui(Biblioteca biblioteca, Livro livro) {
         biblioteca.removerLivro(livro);
     }
 
-    public static void consulta(Biblioteca biblioteca){
-        System.out.println("Livros na biblioteca:");
-        for (Livro livro : biblioteca.getLivros()) {
-            System.out.println("ID: " + livro.getId());
-            System.out.println("Título: " + livro.getTitulo());
-            System.out.println("Edição: " + livro.getEditora());
-            System.out.println("Gênero: " + livro.getGenero());
-            System.out.println("Autor: " + livro.getNomeAutor());
-            System.out.println("Disponível: " + (livro.isStatus() ? "Sim" : "Não"));
-        }
-    }
+
 }

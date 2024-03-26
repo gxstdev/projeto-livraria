@@ -2,6 +2,7 @@ package entities;
 
 public class Livro {
     private int id;
+    private static int contadorLivros =0;
     private String titulo;
     private String editora;
     private String genero;
@@ -10,6 +11,7 @@ public class Livro {
 
     public Livro(String titulo, String editora,
                  String genero, String nomeAutor, boolean status) {
+        this.id = ++contadorLivros;
         this.titulo = titulo;
         this.editora = editora;
         this.genero = genero;
