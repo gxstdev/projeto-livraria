@@ -15,9 +15,13 @@ public class Biblioteca {
     }
 
     public void addLivro(Livro livro) {
+        livro.setId(livros.size());
         livros.add(livro);
     }
 
+    public void removerLivro(Livro livro) {
+        livros.remove(livro);
+    }
     @Override
     public String toString() {
         return "Biblioteca{" +

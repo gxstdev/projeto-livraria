@@ -8,9 +8,8 @@ public class Livro {
     private String nomeAutor;
     private boolean status;
 
-    public Livro(int id, String titulo, String editora,
+    public Livro(String titulo, String editora,
                  String genero, String nomeAutor, boolean status) {
-        this.id = id;
         this.titulo = titulo;
         this.editora = editora;
         this.genero = genero;
