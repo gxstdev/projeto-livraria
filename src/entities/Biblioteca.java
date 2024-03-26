@@ -32,7 +32,7 @@ public class Biblioteca {
 
             emprestimos.add(new Emprestimo(livroEmprestado, usuario));
             System.out.printf("Você pegou emprestado o livro %s!", livroEmprestado.getTitulo());
-        }else {
+        } else {
             System.out.println("Não foi possível pegar o livro emprestado.");
         }
     }
@@ -49,13 +49,14 @@ public class Biblioteca {
         }
     }
 
-    public void consultarLivrosDisponiveis(){
-        for (Livro livro : livros){
-            if(livro.isStatus()){
+    public void consultarLivrosDisponiveis() {
+        for (Livro livro : livros) {
+            if (livro.isStatus()) {
                 System.out.println(livro);
             }
         }
     }
+
     public Livro encontrarLivroPorId(int id) {
         for (Livro livro : getLivros()) {
             if (id == livro.getId()) {
@@ -65,20 +66,26 @@ public class Biblioteca {
         return null;
     }
 
-    public void exibirLivrosEmprestados(){
-        for(Emprestimo emprestimo : emprestimos){
-            System.out.println(emprestimo.getLivro());
+    public void exibirLivrosEmprestados() {
+        for (Emprestimo emprestimo : emprestimos) {
+            Livro livro = emprestimo.getLivro();
+            if (!livro.isStatus()) {
+                System.out.println(emprestimo.getLivro());
+            }
         }
     }
 
     public void devolverLivro(Scanner input) {
         System.out.print("Insira o ID do livro:");
-       int idLivro= input.nextInt();
-       for(Livro livro : livros){
-           if(idLivro == livro.getId()){
-               livro.setStatus(true);
-           }
-       }
+        int idLivro = input.nextInt();
+        for (Livro livro : livros) {
+            if (idLivro == livro.getId()) {
+                livro.setStatus(true);
+                System.out.println("\n\nLivro devolvido à biblioteca!\n");
+                return;
+            }
+        }
+        System.out.println("\n\nLivro não encontrado!\n");
 
     }
 
