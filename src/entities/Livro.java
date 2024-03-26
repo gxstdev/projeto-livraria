@@ -69,14 +69,14 @@ public class Livro {
 
     @Override
     public String toString() {
-        return "Livro{" +
-                "id=" + id +
-                ", titulo='" + titulo + '\'' +
-                ", editora='" + editora + '\'' +
-                ", genero='" + genero + '\'' +
-                ", nomeAutor='" + nomeAutor + '\'' +
-                ", status='" + status + '\'' +
-                '}';
+        return "---------------------------------------------\n"+
+                "\nID:" + id +
+                "\n Título: " + titulo +
+                "\n Editora: '" + editora +
+                "\n Gênero: " + genero +
+                "\n Autor: " + nomeAutor +
+                "\n Disponível: " + (isStatus()?"Sim":"Não") +
+                "\n---------------------------------------------\n";
     }
 }
 
