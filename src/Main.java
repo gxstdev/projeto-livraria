@@ -8,7 +8,8 @@ public class Main {
         //System.out.print("\033[H\033[2J");
         //Runtime.getRuntime().exec("cls");
         Usuario usuario = new Usuario("Guilherme", "123", 24, "1", true);
-        Scanner input = new Scanner(System.in);
+
+       final Scanner input = new Scanner(System.in);
         Biblioteca biblioteca = new Biblioteca();
 
 
@@ -41,8 +42,10 @@ public class Main {
                     break;
                 default:
                     System.out.println("Opção inválida.");
+                    break;
             }
         } while (opcao != 0);
+        input.close();
     }
 
     public static void menu() {

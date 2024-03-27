@@ -1,5 +1,6 @@
 package entities;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -30,8 +31,10 @@ public class Biblioteca {
         if (livroEmprestado != null && livroEmprestado.isStatus()) {
             livroEmprestado.setStatus(false);
 
-            emprestimos.add(new Emprestimo(livroEmprestado, usuario));
-            System.out.printf("Você pegou emprestado o livro %s!", livroEmprestado.getTitulo());
+            emprestimos.add(new Emprestimo(livroEmprestado, usuario,LocalDate.now(),LocalDate.now().plusDays(7)));
+
+            System.out.println(emprestimos.get(0));
+            System.out.printf("Você pegou emprestado o livro %s!%n", livroEmprestado.getTitulo());
         } else {
             System.out.println("Não foi possível pegar o livro emprestado.");
         }
@@ -88,6 +91,8 @@ public class Biblioteca {
         System.out.println("\n\nLivro não encontrado!\n");
 
     }
+
+
 
     public void removerLivro(Livro livro) {
         livros.remove(livro);
