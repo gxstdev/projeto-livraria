@@ -7,9 +7,9 @@ import interfaces.Menu;
 import java.util.Scanner;
 
 public class MenuUsuarioComum implements Menu {
-   final private Biblioteca biblioteca;
+    final private Biblioteca biblioteca;
     final private Usuario usuario;
-     final private Scanner input;
+    final private Scanner input;
 
     public MenuUsuarioComum(Biblioteca biblioteca, Usuario usuario, Scanner input) {
         this.biblioteca = biblioteca;
@@ -40,10 +40,10 @@ public class MenuUsuarioComum implements Menu {
                 biblioteca.exibirLivrosEmprestados(usuario);
                 break;
             case 2:
-                biblioteca.emprestarLivro(input,usuario);
+                biblioteca.emprestarLivro(input, usuario);
                 break;
             case 3:
-                biblioteca.devolverLivro(input,usuario);
+                biblioteca.devolverLivro(input, usuario);
                 break;
             case 4:
                 biblioteca.consultarLivrosDisponiveis();

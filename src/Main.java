@@ -2,6 +2,7 @@
 
 import entities.Biblioteca;
 import entities.Livro;
+import entities.Menu.MenuAdmin;
 import entities.Menu.MenuUsuarioComum;
 import entities.usuario.Administrador;
 import entities.usuario.Usuario;
@@ -19,15 +20,16 @@ public class Main {
         final Scanner input = new Scanner(System.in);
         Usuario usuario = cadastrarUsuario(input);
         Biblioteca biblioteca = new Biblioteca();
+        Menu menu;
 
+        if(usuario instanceof Administrador){
+            menu = new MenuAdmin(biblioteca,usuario,input);
+        }else {
 
-
-        Menu menu = new MenuUsuarioComum(biblioteca, usuario, input);
+            menu = new MenuUsuarioComum(biblioteca, usuario, input);
+        }
 
         menu.exibirMenu();
-
-
-
         input.close();
     }
 
@@ -68,9 +70,7 @@ public class Main {
     }
 
 
-    public static void exclui(Biblioteca biblioteca, Livro livro) {
-        biblioteca.removerLivro(livro);
-    }
+
 
 
 }
