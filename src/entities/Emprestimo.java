@@ -80,7 +80,7 @@ public class Emprestimo {
                 "\nUsuário:" + usuario.getNome() +
                 "\nData de empréstimo: " + dataEmprestimo.format(formatador) +
                 "\nData limite para devolução: " + dataLimiteDevolucao.format(formatador)+
-                (isDevolvido()? "\nData em que foi devolvido: " + dataDevolucao.format(formatador):"")+
+                (isDevolvido()? "\nDevolvido em: " + dataDevolucao.format(formatador):"")+
                 "\n-------------------------------\n";
     }
 }
