@@ -1,5 +1,7 @@
 package entities.usuario;
 
+import java.util.Objects;
+
 public abstract class Usuario {
     private int id;
     private String nome;
@@ -47,6 +49,13 @@ public abstract class Usuario {
     public void setTelefone(String telefone) {
         this.telefone = telefone;
     }
+
+
+    public boolean equals(Usuario usuario) {
+
+        return this.id == usuario.id;
+    }
+
 
 }
 

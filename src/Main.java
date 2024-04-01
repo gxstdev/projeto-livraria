@@ -2,9 +2,11 @@
 
 import entities.Biblioteca;
 import entities.Livro;
+import entities.Menu.MenuUsuarioComum;
 import entities.usuario.Administrador;
 import entities.usuario.Usuario;
 import entities.usuario.UsuarioComum;
+import interfaces.Menu;
 
 
 import java.util.Scanner;
@@ -18,38 +20,13 @@ public class Main {
         Usuario usuario = cadastrarUsuario(input);
         Biblioteca biblioteca = new Biblioteca();
 
-        int opcao;
-        do {
-            menuUsuarioComum();
-            opcao = input.nextInt();
-            input.nextLine();
-            switch (opcao) {
-                case 1:
-                    biblioteca.incluirLivro(input);
-                    break;
 
-                case 2:
-                    biblioteca.consultarLivrosDisponiveis();
-                    System.out.println("Digite o ID do livro que deseja pegar emprestado: ");
-                    int id = input.nextInt();
-                    biblioteca.emprestarLivro(biblioteca.encontrarLivroPorId(id), usuario);
-                    break;
 
-                case 3:
-                    biblioteca.devolverLivro(input);
-                    break;
+        Menu menu = new MenuUsuarioComum(biblioteca, usuario, input);
 
-                case 4:
-                    biblioteca.consultarLivros();
-                    break;
-                case 7:
-                    biblioteca.exibirLivrosEmprestados();
-                    break;
-                default:
-                    System.out.println("Opção inválida.");
-                    break;
-            }
-        } while (opcao != 0);
+        menu.exibirMenu();
+
+
 
         input.close();
     }

@@ -10,13 +10,19 @@ import java.util.Scanner;
 public class Biblioteca {
     private List<Livro> livros;
     private List<Emprestimo> emprestimos;
-    private List<Usuario> usuarios;
+
 
     public Biblioteca() {
-
-        livros = new ArrayList<>();
+    //coloquei alguns livros direto na arrayList para fins de teste, já que não temos persistência de dados
+        livros = new ArrayList<>(){{
+            add(new Livro("A Guerra dos Tronos", "Leya", "Fantasia", "George R. R. Martin", true));
+            add(new Livro("O Senhor dos Anéis", "HarperCollins", "Fantasia", "J.R.R. Tolkien", true));
+            add(new Livro("1984", "Companhia das Letras", "Ficção Científica", "George Orwell", true));
+            add(new Livro("Dom Quixote", "Saraiva", "Romance", "Miguel de Cervantes", true));
+            add(new Livro("O Pequeno Príncipe", "Agir", "Infantil", "Antoine de Saint-Exupéry", true));
+        }};
         emprestimos = new ArrayList<>();
-        usuarios = new ArrayList<>();
+
     }
 
     public List<Livro> getLivros() {
@@ -27,8 +33,11 @@ public class Biblioteca {
         livros.add(livro);
     }
 
-    public void emprestarLivro(Livro livroEmprestado, Usuario usuario) {
-
+    public void emprestarLivro(Scanner input,Usuario usuario) {
+        consultarLivrosDisponiveis();
+        System.out.print("Digite o ID do livro que deseja pegar emprestado: ");
+        int id = input.nextInt();
+        Livro livroEmprestado = encontrarLivroPorId(id);
         if (livroEmprestado != null && livroEmprestado.isStatus()) {
             livroEmprestado.setStatus(false);
 
@@ -44,12 +53,15 @@ public class Biblioteca {
     public void consultarLivros() {
         System.out.println("Livros na biblioteca:");
         for (Livro livro : this.livros) {
+            System.out.println("\n\n----------------------------------");
             System.out.println("ID: " + livro.getId());
             System.out.println("Título: " + livro.getTitulo());
             System.out.println("Edição: " + livro.getEditora());
             System.out.println("Gênero: " + livro.getGenero());
             System.out.println("Autor: " + livro.getNomeAutor());
             System.out.println("Disponível: " + (livro.isStatus() ? "Sim" : "Não"));
+            System.out.println("\n\n----------------------------------");
+
         }
     }
 
@@ -70,25 +82,31 @@ public class Biblioteca {
         return null;
     }
 
-    public void exibirLivrosEmprestados() {
+    public void exibirLivrosEmprestados(Usuario usuario) {
         for (Emprestimo emprestimo : emprestimos) {
-            Livro livro = emprestimo.getLivro();
-            if (!livro.isStatus()) {
-                System.out.println(emprestimo.getLivro());
+            if (emprestimo.getUsuario().equals(usuario)) {
+                System.out.println(emprestimo);
             }
         }
     }
 
-    public void devolverLivro(Scanner input) {
-        System.out.print("Insira o ID do livro:");
-        int idLivro = input.nextInt();
-        for (Livro livro : livros) {
-            if (idLivro == livro.getId()) {
-                livro.setStatus(true);
+    public void devolverLivro(Scanner input,Usuario usuario) {
+        exibirLivrosEmprestados(usuario);
+        System.out.print("Insira o ID do emprestimo:");
+        int idEmprestimo = input.nextInt();
+
+
+        for(Emprestimo emprestimo:emprestimos){
+            if(idEmprestimo == emprestimo.getId() && !emprestimo.isDevolvido()){
+                emprestimo.getLivro().setStatus(true);
+                emprestimo.setDevolvido();
+                emprestimo.setDataDevolucao(LocalDate.now());
                 System.out.println("\n\nLivro devolvido à biblioteca!\n");
                 return;
             }
         }
+
+
         System.out.println("\n\nLivro não encontrado!\n");
 
     }

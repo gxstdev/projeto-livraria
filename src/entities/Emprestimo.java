@@ -13,15 +13,21 @@ public class Emprestimo {
 
     private LocalDate dataEmprestimo;
 
+    private LocalDate dataLimiteDevolucao;
+
+    private boolean devolvido;
+
     private LocalDate dataDevolucao;
 
 
-    public Emprestimo(Livro livro, Usuario usuario,LocalDate dataEmprestimo,LocalDate dataDevolucao) {
+    public Emprestimo(Livro livro, Usuario usuario,LocalDate dataEmprestimo,LocalDate dataLimiteDevolucao) {
         this.id = ++contadorDeEmprestimos;
         this.livro = livro;
         this.usuario = usuario;
         this.dataEmprestimo = dataEmprestimo;
-        this.dataDevolucao = dataDevolucao;
+        this.dataLimiteDevolucao = dataLimiteDevolucao;
+        this.devolvido=false;
+        this.dataDevolucao=null;
     }
 
     public int getId() {
@@ -32,6 +38,11 @@ public class Emprestimo {
     public Livro getLivro() {
         return livro;
     }
+
+    public boolean isDevolvido() {
+        return devolvido;
+    }
+
 
 
     public Usuario getUsuario() {
@@ -48,12 +59,16 @@ public class Emprestimo {
         this.dataEmprestimo = dataEmprestimo;
     }
 
-    public LocalDate getDataDevolucao() {
-        return dataDevolucao;
+    public LocalDate getDataLimiteDevolucao() {
+        return dataLimiteDevolucao;
     }
 
-    public void setDataDevolucao(LocalDate dataDevolucao) {
-        this.dataDevolucao = dataDevolucao;
+    public void setDataDevolucao(LocalDate data){
+        this.dataDevolucao = data;
+    }
+
+    public void setDevolvido() {
+        this.devolvido = !this.devolvido;
     }
 
     @Override
@@ -64,7 +79,8 @@ public class Emprestimo {
                 "\nLivro: " + livro.getTitulo() +
                 "\nUsuário:" + usuario.getNome() +
                 "\nData de empréstimo: " + dataEmprestimo.format(formatador) +
-                "\nData de devolução: " + dataDevolucao.format(formatador)+
+                "\nData limite para devolução: " + dataLimiteDevolucao.format(formatador)+
+                (isDevolvido()? "\nData em que foi devolvido: " + dataDevolucao.format(formatador):"")+
                 "\n-------------------------------\n";
     }
 }

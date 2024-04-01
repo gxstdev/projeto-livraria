@@ -6,10 +6,10 @@ import interfaces.Menu;
 
 import java.util.Scanner;
 
-class MenuUsuarioComum implements Menu {
-    private Biblioteca biblioteca;
-    private Usuario usuario;
-    private Scanner input;
+public class MenuUsuarioComum implements Menu {
+   final private Biblioteca biblioteca;
+    final private Usuario usuario;
+     final private Scanner input;
 
     public MenuUsuarioComum(Biblioteca biblioteca, Usuario usuario, Scanner input) {
         this.biblioteca = biblioteca;
@@ -36,13 +36,14 @@ class MenuUsuarioComum implements Menu {
     public void selecionarOpcao(int opcao) {
         switch (opcao) {
             case 1:
-                visualizarEmprestimos();
+                System.out.println("\nHistórico de livros emprestados: \n\n");
+                biblioteca.exibirLivrosEmprestados(usuario);
                 break;
             case 2:
-                emprestarLivro();
+                biblioteca.emprestarLivro(input,usuario);
                 break;
             case 3:
-                devolverLivro();
+                biblioteca.devolverLivro(input,usuario);
                 break;
             case 4:
                 biblioteca.consultarLivrosDisponiveis();
