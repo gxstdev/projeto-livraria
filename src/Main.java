@@ -1,65 +1,71 @@
-import entities.*;
 
-import java.util.Date;
+
+import entities.Biblioteca;
+import entities.Livro;
+import entities.Menu.MenuAdmin;
+import entities.Menu.MenuUsuarioComum;
+import entities.usuario.Administrador;
+import entities.usuario.Usuario;
+import entities.usuario.UsuarioComum;
+import interfaces.Menu;
+
+
 import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
         //System.out.print("\033[H\033[2J");
         //Runtime.getRuntime().exec("cls");
-        Scanner input = new Scanner(System.in);
 
+        final Scanner input = new Scanner(System.in);
+        Usuario usuario = cadastrarUsuario(input);
         Biblioteca biblioteca = new Biblioteca();
+        Menu menu;
 
-        Livro l1 = new Livro(0, "Livro 1", "E1", "Fic",
-                "Autor 1", true);
+        if(usuario instanceof Administrador){
+            menu = new MenuAdmin(biblioteca,usuario,input);
+        }else {
 
-        int opcao;
-        do{
-            menu();
-            opcao = input.nextInt();
-            switch(opcao){
-                case 1:
-                    inclui(biblioteca, l1);
-                    break;
+            menu = new MenuUsuarioComum(biblioteca, usuario, input);
+        }
 
-                case 2:
-                    altera();
-                    break;
-
-                case 3:
-                    exclui();
-                    break;
-
-                case 4:
-                    consulta(biblioteca);
-                    break;
-
-                default:
-                    System.out.println("Opção inválida.");
-            }
-        } while(opcao != 0);
+        menu.exibirMenu();
+        input.close();
     }
-    public static void menu(){
-        System.out.println("\tCadastrar livro");
+
+    public static void menuUsuarioComum() {
+        System.out.println("\tMenu Principal");
         System.out.println("1. Adicionar livro");
         System.out.println("2. Emprestar livro");
         System.out.println("3. Devolver livro");
         System.out.println("4. Mostrar livros");
-    }
-    public static void inclui(Biblioteca biblioteca, Livro livro){
-        biblioteca.addLivro(livro);
-    }
-
-    public static void altera(){
-        System.out.println("Você entrou no método Altera.");
+        System.out.println("5. Alterar livros");
+        System.out.println("6. Excluir livros");
+        System.out.println("7. Exibir livros emprestados");
     }
 
-    public static void exclui(){
-        System.out.println("Você entrou no método Exclui.");
-    }
+    public static Usuario cadastrarUsuario(Scanner sc) {
+        int opcao, idade;
+        String nomeUsuario, telefone, cpf;
+        System.out.print("Tipos de usuário: \n1.Administrador \n2.Comum\nInsira o tipo de usuário: ");
+        opcao = sc.nextInt();
+        sc.nextLine();
 
-    public static void consulta(Biblioteca biblioteca){
-        System.out.println(biblioteca);
+        System.out.print("Insira o nome de usuário: ");
+        nomeUsuario = sc.nextLine();
+
+        System.out.print("Insira o CPF: ");
+        cpf = sc.nextLine();
+
+        System.out.print("Insira o telefone: ");
+        telefone=sc.nextLine();
+
+        System.out.print("Insira a idade: ");
+        idade= sc.nextInt();
+
+        if (opcao == 1) {
+            return new Administrador(nomeUsuario,cpf,idade,telefone);
+        }
+        return new UsuarioComum(nomeUsuario,cpf,idade,telefone);
     }
 }

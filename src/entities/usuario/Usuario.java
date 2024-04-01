@@ -1,7 +1,5 @@
 package entities.usuario;
 
-import java.util.Objects;
-
 public abstract class Usuario {
     private int id;
     private String nome;
