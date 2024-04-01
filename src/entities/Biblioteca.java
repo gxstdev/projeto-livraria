@@ -1,5 +1,7 @@
 package entities;
 
+import entities.usuario.Usuario;
+
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -21,8 +23,7 @@ public class Biblioteca {
         return livros;
     }
 
-    public void addLivro(Livro livro) {
-
+    private void addLivro(Livro livro) {
         livros.add(livro);
     }
 
@@ -89,6 +90,24 @@ public class Biblioteca {
             }
         }
         System.out.println("\n\nLivro não encontrado!\n");
+
+    }
+
+    public  void incluirLivro( Scanner input) {
+        System.out.println("Digite o Título: ");
+        String titulo = input.nextLine();
+
+        System.out.println("Digite a Editora: ");
+        String editora = input.nextLine();
+
+        System.out.println("Digite o Gênero: ");
+        String genero = input.nextLine();
+
+        System.out.println("Digite o Nome Autor: ");
+        String nomeAutor = input.nextLine();
+
+        this.addLivro(new Livro(titulo, editora, genero, nomeAutor, true));
+        System.out.println("\nLivro adicionado com sucesso!");
 
     }
 

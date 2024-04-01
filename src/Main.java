@@ -1,33 +1,38 @@
-import entities.*;
 
-import java.util.Date;
+
+import entities.Biblioteca;
+import entities.Livro;
+import entities.usuario.Administrador;
+import entities.usuario.Usuario;
+import entities.usuario.UsuarioComum;
+
+
 import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
         //System.out.print("\033[H\033[2J");
         //Runtime.getRuntime().exec("cls");
-        Usuario usuario = new Usuario("Guilherme", "123", 24, "1", true);
 
-       final Scanner input = new Scanner(System.in);
+        final Scanner input = new Scanner(System.in);
+        Usuario usuario = cadastrarUsuario(input);
         Biblioteca biblioteca = new Biblioteca();
-
 
         int opcao;
         do {
-            menu();
+            menuUsuarioComum();
             opcao = input.nextInt();
             input.nextLine();
             switch (opcao) {
                 case 1:
-                    inclui(biblioteca, input);
+                    biblioteca.incluirLivro(input);
                     break;
 
                 case 2:
                     biblioteca.consultarLivrosDisponiveis();
                     System.out.println("Digite o ID do livro que deseja pegar emprestado: ");
                     int id = input.nextInt();
-                    biblioteca.emprestarLivro(biblioteca.encontrarLivroPorId(id),usuario);
+                    biblioteca.emprestarLivro(biblioteca.encontrarLivroPorId(id), usuario);
                     break;
 
                 case 3:
@@ -45,10 +50,11 @@ public class Main {
                     break;
             }
         } while (opcao != 0);
+
         input.close();
     }
 
-    public static void menu() {
+    public static void menuUsuarioComum() {
         System.out.println("\tMenu Principal");
         System.out.println("1. Adicionar livro");
         System.out.println("2. Emprestar livro");
@@ -59,22 +65,29 @@ public class Main {
         System.out.println("7. Exibir livros emprestados");
     }
 
-    public static void inclui(Biblioteca biblioteca, Scanner input) {
-        System.out.println("Digite o Título: ");
-        String titulo = input.nextLine();
+    public static Usuario cadastrarUsuario(Scanner sc) {
+        int opcao, idade;
+        String nomeUsuario, telefone, cpf;
+        System.out.print("Tipos de usuário: \n1.Administrador \n2.Comum\nInsira o tipo de usuário: ");
+        opcao = sc.nextInt();
+        sc.nextLine();
 
-        System.out.println("Digite a Editora: ");
-        String editora = input.nextLine();
+        System.out.print("Insira o nome de usuário: ");
+        nomeUsuario = sc.nextLine();
 
-        System.out.println("Digite o Gênero: ");
-        String genero = input.nextLine();
+        System.out.print("Insira o CPF: ");
+        cpf = sc.nextLine();
 
-        System.out.println("Digite o Nome Autor: ");
-        String nomeAutor = input.nextLine();
+        System.out.print("Insira o telefone: ");
+        telefone=sc.nextLine();
 
-        biblioteca.addLivro(new Livro(titulo, editora, genero, nomeAutor, true));
-        System.out.println("\nLivro adicionado com sucesso!");
+        System.out.print("Insira a idade: ");
+        idade= sc.nextInt();
 
+        if (opcao == 1) {
+            return new Administrador(nomeUsuario,cpf,idade,telefone);
+        }
+        return new UsuarioComum(nomeUsuario,cpf,idade,telefone);
     }
 
 
