@@ -1,6 +1,7 @@
 import entities.*;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Scanner;
 
 public class Main {
@@ -17,6 +18,9 @@ public class Main {
         do {
             menu();
             opcao = input.nextInt();
+
+            opcao = verificarOpcao(biblioteca, opcao);
+
             input.nextLine();
             switch (opcao) {
                 case 1:
@@ -40,6 +44,8 @@ public class Main {
                 case 7:
                     biblioteca.exibirLivrosEmprestados();
                     break;
+                case 8:
+                    break;
                 default:
                     System.out.println("Opção inválida.");
                     break;
@@ -60,6 +66,8 @@ public class Main {
     }
 
     public static void inclui(Biblioteca biblioteca, Scanner input) {
+        List<Livro> livros = biblioteca.getLivros();
+
         System.out.println("Digite o Título: ");
         String titulo = input.nextLine();
 
@@ -72,15 +80,28 @@ public class Main {
         System.out.println("Digite o Nome Autor: ");
         String nomeAutor = input.nextLine();
 
+        for (Livro livro : livros){
+            if (livro.getTitulo().equalsIgnoreCase(titulo)){
+                System.out.println("O livro não foi adicionado, pois este livro já foi cadastrado anteriormente!");
+                return;
+            }
+        }
+
         biblioteca.addLivro(new Livro(titulo, editora, genero, nomeAutor, true));
         System.out.println("\nLivro adicionado com sucesso!");
 
     }
 
-
     public static void exclui(Biblioteca biblioteca, Livro livro) {
         biblioteca.removerLivro(livro);
     }
 
+    public static int verificarOpcao(Biblioteca biblioteca, int opcao){
+        if (opcao > 1 && biblioteca.getLivros().isEmpty()){
+            System.out.println("Ainda não existem livros cadastrados.");
+            return 8;
+        }
+        return opcao;
+    }
 
 }
