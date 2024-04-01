@@ -14,13 +14,13 @@ public class Biblioteca {
 
     public Biblioteca() {
         //coloquei alguns livros direto na arrayList para fins de teste, já que não temos persistência de dados
-        livros = new ArrayList<>() {{
+        livros = new ArrayList<>(); /*{{
             add(new Livro("A Guerra dos Tronos", "Leya", "Fantasia", "George R. R. Martin", true));
             add(new Livro("O Senhor dos Anéis", "HarperCollins", "Fantasia", "J.R.R. Tolkien", true));
             add(new Livro("1984", "Companhia das Letras", "Ficção Científica", "George Orwell", true));
             add(new Livro("Dom Quixote", "Saraiva", "Romance", "Miguel de Cervantes", true));
             add(new Livro("O Pequeno Príncipe", "Agir", "Infantil", "Antoine de Saint-Exupéry", true));
-        }};
+        }};*/
         emprestimos = new ArrayList<>();
 
     }
@@ -83,11 +83,16 @@ public class Biblioteca {
     }
 
     public void exibirLivrosEmprestados(Usuario usuario) {
-        for (Emprestimo emprestimo : emprestimos) {
-            if (emprestimo.getUsuario().equals(usuario)) {
-                System.out.println(emprestimo);
+        if (emprestimos.isEmpty()){
+            System.out.println("Você ainda não pegou livros emprestados.");
+        }else {
+            for (Emprestimo emprestimo : emprestimos) {
+                if (emprestimo.getUsuario().equals(usuario)) {
+                    System.out.println(emprestimo);
+                }
             }
         }
+
     }
 
     public void exibirTodosOsEmprestimos() {

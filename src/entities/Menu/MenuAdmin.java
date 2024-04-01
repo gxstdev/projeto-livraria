@@ -18,6 +18,7 @@ public class MenuAdmin implements Menu {
     }
 
     public void exibirMenu() {
+
         int opcao;
         do {
             System.out.println("\tMenu Administrativo");
@@ -29,11 +30,19 @@ public class MenuAdmin implements Menu {
             System.out.println("0. Sair");
             System.out.print("Escolha uma opção: ");
             opcao = input.nextInt();
+            opcao = verificarOpcao(biblioteca, opcao);
             input.nextLine();
             selecionarOpcao(opcao);
         } while (opcao != 0);
     }
 
+    public static int verificarOpcao(Biblioteca biblioteca, int opcao){
+        if (opcao > 1 && biblioteca.getLivros().isEmpty()){
+            System.out.println("\nAção não pode ser realizada! Ainda não existem livros cadastrados.\n");
+            return 6;
+        }
+        return opcao;
+    }
     public void selecionarOpcao(int opcao) {
         switch (opcao) {
             case 1:
@@ -50,6 +59,8 @@ public class MenuAdmin implements Menu {
                 break;
             case 5:
                 biblioteca.exibirTodosOsEmprestimos();
+                break;
+            case 6:
                 break;
             case 0:
                 System.out.println("Saindo...");
