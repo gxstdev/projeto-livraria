@@ -1,7 +1,4 @@
-
-
 import entities.Biblioteca;
-import entities.Livro;
 import entities.Menu.MenuAdmin;
 import entities.Menu.MenuUsuarioComum;
 import entities.usuario.Administrador;
@@ -9,14 +6,10 @@ import entities.usuario.Usuario;
 import entities.usuario.UsuarioComum;
 import interfaces.Menu;
 
-
 import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
-        //System.out.print("\033[H\033[2J");
-        //Runtime.getRuntime().exec("cls");
-
         final Scanner input = new Scanner(System.in);
         Usuario usuario = cadastrarUsuario(input);
         Biblioteca biblioteca = new Biblioteca();

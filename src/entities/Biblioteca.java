@@ -13,13 +13,13 @@ public class Biblioteca {
 
     public Biblioteca() {
         //coloquei alguns livros direto na arrayList para fins de teste, já que não temos persistência de dados
-        livros = new ArrayList<>() /*{{
+        livros = new ArrayList<>() {{
             add(new Livro("A Guerra dos Tronos", "Leya", "Fantasia", "George R. R. Martin", true));
             add(new Livro("O Senhor dos Anéis", "HarperCollins", "Fantasia", "J.R.R. Tolkien", true));
             add(new Livro("1984", "Companhia das Letras", "Ficção Científica", "George Orwell", true));
             add(new Livro("Dom Quixote", "Saraiva", "Romance", "Miguel de Cervantes", true));
-            add(new Livro("O Pequeno Príncipe", "Agir", "Infantil", "Antoine de Saint-Exupéry", false));
-        }}*/;
+            add(new Livro("O Pequeno Príncipe", "Agir", "Infantil", "Antoine de Saint-Exupéry", true));
+        }};
         emprestimos = new ArrayList<>();
 
     }
@@ -118,7 +118,11 @@ public class Biblioteca {
     }
 
     public void exibirTodosOsEmprestimos() {
-        emprestimos.forEach(System.out::println);
+        if (emprestimos.isEmpty()) {
+            System.out.println("Você ainda não realizou nenhum empréstimo!");
+        } else {
+            emprestimos.forEach(System.out::println);
+        }
     }
 
     public void devolverLivro(Scanner input, Usuario usuario) {
@@ -152,6 +156,12 @@ public class Biblioteca {
         System.out.println("Digite o Nome Autor: ");
         String nomeAutor = input.nextLine();
 
+        for (Livro livro : livros){
+            if (livro.getTitulo().equalsIgnoreCase(titulo)){
+                System.out.println("O livro não foi adicionado, pois este livro já foi cadastrado anteriormente!");
+                return;
+            }
+        }
         this.addLivro(new Livro(titulo, editora, genero, nomeAutor, true));
         System.out.println("\nLivro adicionado com sucesso!");
 
@@ -160,14 +170,14 @@ public class Biblioteca {
     public void removerLivro(Scanner input) {
         this.consultarLivros();
         int idLivro;
-        System.out.println("Informe o ID de um livro para exluir: ");
+        System.out.print("Informe o ID de um livro para excluir: ");
         idLivro = input.nextInt();
 
         Livro livroExclusao = encontrarLivroPorId(idLivro);
 
         while (livroExclusao == null) {
             System.out.printf("Não existe nenhum livro com o ID : %s\n", idLivro);
-            System.out.println("Informe o ID de um livro para exluir: ");
+            System.out.print("Informe o ID de um livro para excluir: ");
             idLivro = input.nextInt();
             livroExclusao = encontrarLivroPorId(idLivro);
         }
@@ -191,5 +201,61 @@ public class Biblioteca {
     }
 
     public void alterarLivro(Scanner input) {
+        System.out.println("Digite o ID do livro que deseja alterar: ");
+        int id = input.nextInt();
+        int opcao = 0;
+        for (Livro livro : livros){
+            if (livro.getId() == id){
+                do {
+                System.out.printf("Alterar o livro: %s", livro.getTitulo());
+                System.out.println("\nEscolha a opção que deseja alterar: ");
+                System.out.println("1 - Título: \n2 - Editora: \n3 - Gênero");
+                System.out.println("4 - Nome Autor\n5 - Status\n0 - Sair");
+                opcao = input.nextInt();
+                input.nextLine();
+
+                switch (opcao){
+                    case 1:
+                        System.out.println("Digite o Título:");
+                        String titulo = input.nextLine();
+                        for (Livro l : livros){
+                            if (l.getTitulo().equalsIgnoreCase(titulo)){
+                                System.out.println("Título do livro não pode ser alterado, " +
+                                        "pois já existe um livro com esse nome.");
+                                return;
+                            }
+                        }
+                        livro.setTitulo(titulo);
+                        System.out.println("Título alterado com sucesso!");
+                    break;
+                    case 2:
+                        System.out.println("Digite a Editora: ");
+                        livro.setEditora(input.nextLine());
+                        System.out.println("Editora alterada com sucesso!");
+                    break;
+                    case 3:
+                        System.out.println("Digite o Gênero: ");
+                        livro.setGenero(input.nextLine());
+                        System.out.println("Gênero alterado com sucesso!");
+                    break;
+                    case  4:
+                        System.out.println("Digite o nome do Autor: ");
+                        livro.setNomeAutor(input.nextLine());
+                        System.out.println("Nome Autor alterado com sucesso!");
+                    break;
+                    case 5:
+                        System.out.println("Digite o Status: ");
+                        livro.setStatus(input.nextBoolean());
+                        System.out.println("Status alterado com sucesso!");
+                    break;
+                    case 0:
+                        System.out.println("Saindo...");
+                    break;
+                    default:
+                        System.out.println("Opção inválida!");
+                }
+            }while (opcao != 0);
+            }
+        }
     }
 }
