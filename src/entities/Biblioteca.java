@@ -81,10 +81,34 @@ public class Biblioteca {
         return null;
     }
 
+    public void exibirLivroPorAutor(String autor) {
+        for (Livro livro : livros) {
+            if (livro.getNomeAutor().equalsIgnoreCase(autor)) {
+                System.out.println(livro);
+            }
+        }
+    }
+
+    public void exibirLivroPorEditora(String editora) {
+        for (Livro livro : livros) {
+            if (livro.getEditora().equalsIgnoreCase(editora)) {
+                System.out.println(livro);
+            }
+        }
+    }
+
+    public void buscarPorTitulo(String titulo) {
+        for (Livro livro : livros) {
+            if (livro.getTitulo().equalsIgnoreCase(titulo)) {
+                System.out.println(livro);
+            }
+        }
+    }
+
     public void exibirLivrosEmprestados(Usuario usuario) {
-        if (emprestimos.isEmpty()){
+        if (emprestimos.isEmpty()) {
             System.out.println("Você ainda não pegou livros emprestados.\n");
-        }else {
+        } else {
             for (Emprestimo emprestimo : emprestimos) {
                 if (emprestimo.getUsuario().equals(usuario)) {
                     System.out.println(emprestimo);
@@ -150,7 +174,7 @@ public class Biblioteca {
 
         if (!livroExclusao.isStatus()) {
             System.out.printf("Não foi possível realizar a Exclusão\n" +
-            "O livro '%s' está emprestado no momento", livroExclusao.getTitulo());
+                    "O livro '%s' está emprestado no momento", livroExclusao.getTitulo());
             return;
         }
 
